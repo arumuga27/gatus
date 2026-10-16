@@ -169,10 +169,10 @@ func TestStore_HourlyUptimeEntriesAreMergedIntoDailyUptimeEntriesProperly(t *tes
 		{numberOfHours: 50, expectedMaxUptimeEntries: 50},
 		{numberOfHours: 75, expectedMaxUptimeEntries: 75},
 		{numberOfHours: 99, expectedMaxUptimeEntries: 99},
-		{numberOfHours: 150, expectedMaxUptimeEntries: 100},
-		{numberOfHours: 300, expectedMaxUptimeEntries: 100},
-		{numberOfHours: 768, expectedMaxUptimeEntries: 100}, // 32 days (in hours), which means anything beyond that won't be persisted anyway
-		{numberOfHours: 1000, expectedMaxUptimeEntries: 100},
+		{numberOfHours: 150, expectedMaxUptimeEntries: 150},
+		{numberOfHours: 300, expectedMaxUptimeEntries: 200},
+		{numberOfHours: 768, expectedMaxUptimeEntries: 200},   // 32 days (in hours)
+		{numberOfHours: 2208, expectedMaxUptimeEntries: 200},  // 92 days (in hours), which means anything beyond that won't be persisted anyway
 	}
 	// Note that is not technically an accurate real world representation, because uptime entries are always added in
 	// the present, while this test is inserting results from the past to simulate long term uptime entries.
@@ -232,8 +232,8 @@ func TestStore_getEndpointUptime(t *testing.T) {
 	if numberOfUptimeEntriesForEndpoint < 20 || numberOfUptimeEntriesForEndpoint > 200 {
 		t.Errorf("expected number of uptime entries to be between 20 and 200, got %d", numberOfUptimeEntriesForEndpoint)
 	}
-	// Retrieve uptime for the past 30d
-	uptime, avgResponseTime, err := store.getEndpointUptime(tx, 1, time.Now().Add(-(30 * 24 * time.Hour)), time.Now())
+	// Retrieve uptime for the past 90d
+	uptime, avgResponseTime, err := store.getEndpointUptime(tx, 1, time.Now().Add(-(90 * 24 * time.Hour)), time.Now())
 	if err != nil {
 		t.Log(err)
 	}
@@ -249,9 +249,9 @@ func TestStore_getEndpointUptime(t *testing.T) {
 	if err != nil {
 		t.Log(err)
 	}
-	// Retrieve uptime for the past 30d
+	// Retrieve uptime for the past 90d
 	tx, _ = store.db.Begin()
-	uptime, _, err = store.getEndpointUptime(tx, 1, time.Now().Add(-(30 * 24 * time.Hour)), time.Now())
+	uptime, _, err = store.getEndpointUptime(tx, 1, time.Now().Add(-(90 * 24 * time.Hour)), time.Now())
 	if err != nil {
 		t.Log(err)
 	}
@@ -259,11 +259,11 @@ func TestStore_getEndpointUptime(t *testing.T) {
 	if uptime == 1 {
 		t.Errorf("expected uptime to be less than 1, got %f", uptime)
 	}
-	// Retrieve uptime for the past 30d, but excluding the last 24h
+	// Retrieve uptime for the past 90d, but excluding the last 24h
 	// This is not a real use case as there is no way for users to exclude the last 24h, but this is a great way
 	// to ensure that hourly merging works as intended
 	tx, _ = store.db.Begin()
-	uptimeExcludingLast24h, _, err := store.getEndpointUptime(tx, 1, time.Now().Add(-(30 * 24 * time.Hour)), time.Now().Add(-24*time.Hour))
+	uptimeExcludingLast24h, _, err := store.getEndpointUptime(tx, 1, time.Now().Add(-(90 * 24 * time.Hour)), time.Now().Add(-24*time.Hour))
 	if err != nil {
 		t.Log(err)
 	}
@@ -342,6 +342,9 @@ func TestStore_Persistence(t *testing.T) {
 	}
 	if uptime, _ := store.GetUptimeByKey(testEndpoint.Key(), time.Now().Add(-time.Hour*24*30), time.Now()); uptime != 0.5 {
 		t.Errorf("the uptime over the past 30d should've been 0.5, got %f", uptime)
+	}
+	if uptime, _ := store.GetUptimeByKey(testEndpoint.Key(), time.Now().Add(-time.Hour*24*90), time.Now()); uptime != 0.5 {
+		t.Errorf("the uptime over the past 90d should've been 0.5, got %f", uptime)
 	}
 	ssFromOldStore, _ := store.GetEndpointStatus(testEndpoint.Group, testEndpoint.Name, paging.NewEndpointStatusParams().WithResults(1, storage.DefaultMaximumNumberOfResults).WithEvents(1, storage.DefaultMaximumNumberOfEvents))
 	if ssFromOldStore == nil || ssFromOldStore.Group != "group" || ssFromOldStore.Name != "name" || len(ssFromOldStore.Events) != 3 || len(ssFromOldStore.Results) != 2 {
