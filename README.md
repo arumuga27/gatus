@@ -3571,6 +3571,7 @@ web:
 ![Uptime 24h](https://status.twin.sh/api/v1/endpoints/core_blog-external/uptimes/24h/badge.svg)
 ![Uptime 7d](https://status.twin.sh/api/v1/endpoints/core_blog-external/uptimes/7d/badge.svg)
 ![Uptime 30d](https://status.twin.sh/api/v1/endpoints/core_blog-external/uptimes/30d/badge.svg)
+![Uptime 90d](https://status.twin.sh/api/v1/endpoints/core_blog-external/uptimes/90d/badge.svg)
 
 Gatus can automatically generate an SVG badge for one of your monitored endpoints.
 This allows you to put badges in your individual applications' README or even create your own status page if you
@@ -3581,7 +3582,7 @@ The path to generate a badge is the following:
 /api/v1/endpoints/{key}/uptimes/{duration}/badge.svg
 ```
 Where:
-- `{duration}` is `30d`, `7d`, `24h` or `1h`
+- `{duration}` is `90d`, `30d`, `7d`, `24h` or `1h`
 - `{key}` has the pattern `<GROUP_NAME>_<ENDPOINT_NAME>` in which both variables have ` `, `/`, `_`, `,`, `.`, `#`, `+` and `&` replaced by `-`.
 
 For instance, if you want the uptime during the last 24 hours from the endpoint `frontend` in the group `core`,
@@ -3641,26 +3642,28 @@ See more information about the Shields.io badge endpoint [here](https://shields.
 ![Response time 24h](https://status.twin.sh/api/v1/endpoints/core_blog-external/response-times/24h/badge.svg)
 ![Response time 7d](https://status.twin.sh/api/v1/endpoints/core_blog-external/response-times/7d/badge.svg)
 ![Response time 30d](https://status.twin.sh/api/v1/endpoints/core_blog-external/response-times/30d/badge.svg)
+![Response time 90d](https://status.twin.sh/api/v1/endpoints/core_blog-external/response-times/90d/badge.svg)
 
 The endpoint to generate a badge is the following:
 ```
 /api/v1/endpoints/{key}/response-times/{duration}/badge.svg
 ```
 Where:
-- `{duration}` is `30d`, `7d`, `24h` or `1h`
+- `{duration}` is `90d`, `30d`, `7d`, `24h` or `1h`
 - `{key}` has the pattern `<GROUP_NAME>_<ENDPOINT_NAME>` in which both variables have ` `, `/`, `_`, `,`, `.`, `#`, `+` and `&` replaced by `-`.
 
 #### Response time (chart)
 ![Response time 24h](https://status.twin.sh/api/v1/endpoints/core_blog-external/response-times/24h/chart.svg)
 ![Response time 7d](https://status.twin.sh/api/v1/endpoints/core_blog-external/response-times/7d/chart.svg)
 ![Response time 30d](https://status.twin.sh/api/v1/endpoints/core_blog-external/response-times/30d/chart.svg)
+![Response time 90d](https://status.twin.sh/api/v1/endpoints/core_blog-external/response-times/90d/chart.svg)
 
 The endpoint to generate a response time chart is the following:
 ```
 /api/v1/endpoints/{key}/response-times/{duration}/chart.svg
 ```
 Where:
-- `{duration}` is `30d`, `7d`, or `24h`
+- `{duration}` is `90d`, `30d`, `7d`, or `24h`
 - `{key}` has the pattern `<GROUP_NAME>_<ENDPOINT_NAME>` in which both variables have ` `, `/`, `_`, `,`, `.`, `#`, `+` and `&` replaced by `-`.
 
 ##### How to change the color thresholds of the response time badge
@@ -3718,7 +3721,7 @@ The path to get raw uptime data for an endpoint is:
 /api/v1/endpoints/{key}/uptimes/{duration}
 ```
 Where:
-- `{duration}` is `30d`, `7d`, `24h` or `1h`
+- `{duration}` is `90d`, `30d`, `7d`, `24h` or `1h`
 - `{key}` has the pattern `<GROUP_NAME>_<ENDPOINT_NAME>` in which both variables have ` `, `/`, `_`, `,`, `.`, `#`, `+` and `&` replaced by `-`.
 
 For instance, if you want the raw uptime data for the last 24 hours from the endpoint `frontend` in the group `core`, the URL would look like this:
@@ -3732,7 +3735,7 @@ The path to get raw response time data for an endpoint is:
 /api/v1/endpoints/{key}/response-times/{duration}
 ```
 Where:
-- `{duration}` is `30d`, `7d`, `24h` or `1h`
+- `{duration}` is `90d`, `30d`, `7d`, `24h` or `1h`
 - `{key}` has the pattern `<GROUP_NAME>_<ENDPOINT_NAME>` in which both variables have ` `, `/`, `_`, `,`, `.`, `#`, `+` and `&` replaced by `-`.
 
 For instance, if you want the raw response time data for the last 24 hours from the endpoint `frontend` in the group `core`, the URL would look like this:

@@ -61,6 +61,11 @@ func TestBadge(t *testing.T) {
 			ExpectedCode: http.StatusOK,
 		},
 		{
+			Name:         "badge-uptime-90d",
+			Path:         "/api/v1/endpoints/core_frontend/uptimes/90d/badge.svg",
+			ExpectedCode: http.StatusOK,
+		},
+		{
 			Name:         "badge-uptime-with-invalid-duration",
 			Path:         "/api/v1/endpoints/core_backend/uptimes/3d/badge.svg",
 			ExpectedCode: http.StatusBadRequest,
@@ -83,6 +88,11 @@ func TestBadge(t *testing.T) {
 		{
 			Name:         "badge-response-time-7d",
 			Path:         "/api/v1/endpoints/core_frontend/response-times/7d/badge.svg",
+			ExpectedCode: http.StatusOK,
+		},
+		{
+			Name:         "badge-response-time-90d",
+			Path:         "/api/v1/endpoints/core_frontend/response-times/90d/badge.svg",
 			ExpectedCode: http.StatusOK,
 		},
 		{

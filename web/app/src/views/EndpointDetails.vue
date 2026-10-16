@@ -113,6 +113,7 @@
                     <option value="24h">24 hours</option>
                     <option value="7d">7 days</option>
                     <option value="30d">30 days</option>
+                    <option value="90d">90 days</option>
                   </select>
                 </div>
               </CardHeader>
@@ -127,11 +128,11 @@
               </CardContent>
             </Card>
 
-            <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-              <Card v-for="period in ['30d', '7d', '24h', '1h']" :key="period">
+            <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
+              <Card v-for="period in ['90d', '30d', '7d', '24h', '1h']" :key="period">
                 <CardHeader class="pb-2">
                   <CardTitle class="text-sm font-medium text-muted-foreground text-center">
-                    {{ period === '30d' ? 'Last 30 days' : period === '7d' ? 'Last 7 days' : period === '24h' ? 'Last 24 hours' : 'Last hour' }}
+                    {{ period === '90d' ? 'Last quarter' : period === '30d' ? 'Last 30 days' : period === '7d' ? 'Last 7 days' : period === '24h' ? 'Last 24 hours' : 'Last hour' }}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -146,10 +147,10 @@
               <CardTitle>Uptime Statistics</CardTitle>
             </CardHeader>
             <CardContent>
-              <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                <div v-for="period in ['30d', '7d', '24h', '1h']" :key="period" class="text-center">
+              <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
+                <div v-for="period in ['90d', '30d', '7d', '24h', '1h']" :key="period" class="text-center">
                   <p class="text-sm text-muted-foreground mb-2">
-                    {{ period === '30d' ? 'Last 30 days' : period === '7d' ? 'Last 7 days' : period === '24h' ? 'Last 24 hours' : 'Last hour' }}
+                    {{ period === '90d' ? 'Last quarter' : period === '30d' ? 'Last 30 days' : period === '7d' ? 'Last 7 days' : period === '24h' ? 'Last 24 hours' : 'Last hour' }}
                   </p>
                   <img :src="generateUptimeBadgeImageURL(period)" :alt="`${period} uptime`" class="mx-auto" />
                 </div>

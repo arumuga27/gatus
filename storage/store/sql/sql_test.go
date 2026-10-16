@@ -171,7 +171,7 @@ func TestStore_HourlyUptimeEntriesAreMergedIntoDailyUptimeEntriesProperly(t *tes
 		{numberOfHours: 99, expectedMaxUptimeEntries: 99},
 		{numberOfHours: 150, expectedMaxUptimeEntries: 100},
 		{numberOfHours: 300, expectedMaxUptimeEntries: 100},
-		{numberOfHours: 768, expectedMaxUptimeEntries: 100}, // 32 days (in hours), which means anything beyond that won't be persisted anyway
+		{numberOfHours: 768, expectedMaxUptimeEntries: 100}, // well past the merge threshold; older hourly entries are collapsed into daily entries
 		{numberOfHours: 1000, expectedMaxUptimeEntries: 100},
 	}
 	// Note that is not technically an accurate real world representation, because uptime entries are always added in
