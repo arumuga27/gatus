@@ -29,7 +29,7 @@ const props = defineProps({
   duration: {
     type: String,
     required: true,
-    validator: (value) => ['24h', '7d', '30d'].includes(value)
+    validator: (value) => ['24h', '7d', '30d', '90d'].includes(value)
   },
   serverUrl: {
     type: String,
@@ -71,6 +71,9 @@ const filteredEvents = computed(() => {
       break
     case '30d':
       fromTime = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000)
+      break
+    case '90d':
+      fromTime = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000)
       break
     default:
       return []
